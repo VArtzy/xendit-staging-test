@@ -1,10 +1,8 @@
 const button = document.getElementById('bayar')
 
-const socket = io('http://localhost:3000')
-
 button.addEventListener('click', async () => {
     button.disabled = true
-    const response = await fetch('http://localhost/invoice', {
+    const response = await fetch('http://157.245.150.87/invoice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -20,11 +18,4 @@ button.addEventListener('click', async () => {
     }).then(res => res.json())
 
     window.open(response.invoiceUrl)
-})
-
-socket.on('invoice_paid', data => {
-        const el = document.createElement('p')
-        el.innerText = `Terimakasih telah membayar invoice sebesar ${data.amount} ${data.currency}`
-        document.body.appendChild(el)
-        button.removeAttribute('disabled')
 })

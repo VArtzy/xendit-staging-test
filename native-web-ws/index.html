@@ -4,6 +4,18 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Payment Gateway</title>
+        <script type="module">
+            import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+            const socket = io('http://157.245.150.87');
+
+
+socket.on('invoice_paid', data => {
+        const el = document.createElement('p')
+        el.innerText = `Terimakasih telah membayar invoice sebesar ${data.amount} ${data.currency}`
+        document.body.appendChild(el)
+        button.removeAttribute('disabled')
+})
+        </script>
         <script defer src="app.js"></script>
     </head>
     <body>
@@ -12,6 +24,5 @@
         <h3>Rp 10,000</h3>
 
         <button type="submit" id="bayar">Bayar!</button>
-        <script src="/socket.io/socket.io.js"></script>
     </body>
 </html>
