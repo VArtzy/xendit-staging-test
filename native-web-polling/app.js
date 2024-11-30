@@ -5,17 +5,16 @@ async function pollInvoiceStatus() {
     if (!currentInvoiceId) return
 
     try {
-        const response = await fetch(`http://localhost/check-invoice/${currentInvoiceId}`)
-        const status = await response.json()
+        const response = await fetch(`http://157.245.150.87/check-invoice/${currentInvoiceId}`)
+        const invoice = await response.json()
 
-        if (status.status === 'paid') {
+        if (invoice.status === 'PAID') {
+            console.log(invoice)
             const el = document.createElement('p')
-            el.innerText = `Terimakasih telah membayar invoice sebesar ${message.amount} ${message.currency}`
+            el.innerText = `Terimakasih telah membayar invoice sebesar ${invoice.amount} ${invoice.currency}`
             document.body.appendChild(el)
             button.removeAttribute('disabled')   
-        } else {
             currentInvoiceId = null
-            return
         }
 
         setTimeout(pollInvoiceStatus, 5000)
@@ -26,7 +25,7 @@ async function pollInvoiceStatus() {
 
 button.addEventListener('click', async () => {
     button.disabled = true
-    const response = await fetch('http://localhost/invoice', {
+    const response = await fetch('http://157.245.150.87/invoice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

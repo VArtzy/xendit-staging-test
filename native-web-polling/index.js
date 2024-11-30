@@ -43,7 +43,7 @@ const httpServer = createServer((req, res) => {
             }
             const invoice = await xenditInvoiceClient.createInvoice({ data })
 
-            invoiceStatus.set(invoice.id, { status: 'pending', invoiceId: invoice.id })
+            invoiceStatus.set(invoice.id, { status: 'pending', invoiceId: invoice.id, amount: invoice.amount, currency: invoice.currency})
 
             res.writeHead(200, headers)
             res.write(JSON.stringify(invoice))
@@ -57,7 +57,7 @@ const httpServer = createServer((req, res) => {
         req.on('end', () => {
             const body = JSON.parse(data)
 
-            invoiceStatus.set(body.id, { status: body.status, invoiceId: body.id })
+            invoiceStatus.set(body.id, { status: body.status, invoiceId: body.id, amount: body.amount, currency: body.currency})
 
             res.writeHead(200, headers)
             res.end(JSON.stringify({status: 'received'}))
