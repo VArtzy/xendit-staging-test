@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "socket.io": "^4.8.1",
     "xendit-node": "^6.0.0"
   }
 }
