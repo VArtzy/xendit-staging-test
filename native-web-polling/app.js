@@ -5,7 +5,7 @@ async function pollInvoiceStatus() {
     if (!currentInvoiceId) return
 
     try {
-        const response = await fetch(`http://157.245.150.87/check-invoice/${currentInvoiceId}`)
+        const response = await fetch(`http://localhost/check-invoice/${currentInvoiceId}`)
         const invoice = await response.json()
 
         if (invoice.status === 'PAID') {
@@ -25,7 +25,7 @@ async function pollInvoiceStatus() {
 
 button.addEventListener('click', async () => {
     button.disabled = true
-    const response = await fetch('http://157.245.150.87/invoice', {
+    const response = await fetch('http://localhost/invoice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
