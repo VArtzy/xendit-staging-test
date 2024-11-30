@@ -1,6 +1,6 @@
 const button = document.getElementById('bayar')
 
-const eventSource = new EventSource('http://157.245.150.87/events')
+const eventSource = new EventSource('http://localhost/events')
 
 eventSource.onmessage = event => {
     const data = JSON.parse(event.data)
@@ -24,7 +24,7 @@ eventSource.onerror = error => {
 
 button.addEventListener('click', async () => {
     button.disabled = true
-    const response = await fetch('http://157.245.150.87/invoice', {
+    const response = await fetch('http://localhost/invoice', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -39,7 +39,5 @@ button.addEventListener('click', async () => {
         })
     }).then(res => res.json())
 
-    currentInvoiceId = response.id
-    pollInvoiceStatus()
     window.open(response.invoiceUrl)
 })
